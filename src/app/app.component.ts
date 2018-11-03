@@ -5,8 +5,7 @@ import {Todo} from './todo';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss'],
-  providers: [TodoDataService]
+  styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
   constructor(private todoDataService: TodoDataService) {
