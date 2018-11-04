@@ -1,64 +1,44 @@
 import {Injectable} from '@angular/core';
 import {Todo} from './todo';
+import {ApiService} from './api.service';
+import {Observable} from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class TodoDataService {
 
-  // Placeholder for last id so we can simulate
-  // automatic incrementing of ids
-  lastId = 0;
-
-  // Placeholder for todos
-  todos: Todo[] = [];
-
-  constructor() {
+  constructor(private api: ApiService) {
   }
 
   // Simulate POST /todos
-  addTodo(todo: Todo): TodoDataService {
-    if (!todo.id) {
-      todo.id = ++this.lastId;
-    }
-    this.todos.push(todo);
-    return this;
+  addTodo(todo: Todo): Observable<Todo> {
+    return this.api.createTodo(todo);
   }
 
   // Simulate DELETE /todos/:id
-  deleteTodoById(id: number): TodoDataService {
-    this.todos = this.todos
-      .filter(todo => todo.id !== id);
-    return this;
+  deleteTodoById(id: number): Observable<Todo> {
+    return this.api.deleteTodoById(id);
   }
 
   // Simulate PUT /todos/:id
-  updateTodoById(id: number, values: Object = {}): Todo {
-    const todo = this.getTodoById(id);
-    if (!todo) {
-      return null;
-    }
-    Object.assign(todo, values);
-    return todo;
+  updateTodoById(todo: Todo): Observable<Todo> {
+    return this.api.updateTodo(todo);
   }
 
   // Simulate GET /todos
-  getAllTodos(): Todo[] {
-    return this.todos;
+  getAllTodos(): Observable<Todo[]> {
+    return this.api.getAllTodos();
   }
 
   // Simulate GET /todos/:id
-  getTodoById(id: number): Todo {
-    return this.todos
-      .filter(todo => todo.id === id)
-      .pop();
+  getTodoById(id: number): Observable<Todo> {
+    return this.api.getTodoById(id);
   }
 
   // Toggle todo complete
-  toggleTodoComplete(todo: Todo) {
-    const updatedTodo = this.updateTodoById(todo.id, {
-      complete: !todo.complete
-    });
-    return updatedTodo;
+  toggleTodoComplete(todo: Todo): Observable<Todo> {
+    todo.complete = !todo.complete;
+    return this.api.updateTodo(todo);
   }
 }
