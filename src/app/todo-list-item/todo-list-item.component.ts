@@ -1,4 +1,4 @@
-import {Component, Input, OnInit, Output, EventEmitter} from '@angular/core';
+import {Component, Input, OnInit, Output, EventEmitter, HostBinding} from '@angular/core';
 import {Todo} from '../todo';
 
 @Component({
@@ -6,8 +6,10 @@ import {Todo} from '../todo';
   templateUrl: './todo-list-item.component.html',
   styleUrls: ['./todo-list-item.component.scss']
 })
-export class TodoListItemComponent {
+export class TodoListItemComponent implements OnInit {
   @Input() todo: Todo;
+
+  @HostBinding('class.completed') complete = false;
 
   @Output()
   remove: EventEmitter<Todo> = new EventEmitter();
@@ -18,7 +20,12 @@ export class TodoListItemComponent {
   constructor() {
   }
 
+  ngOnInit() {
+    this.complete = this.todo.complete;
+  }
+
   toggleTodoComplete(todo: Todo) {
+    this.complete = !todo.complete;
     this.toggleComplete.emit(todo);
   }
 

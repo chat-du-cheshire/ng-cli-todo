@@ -65,4 +65,12 @@ export class ApiService {
     console.error('ApiService::handleError', error);
     return throwError(error);
   }
+
+  public signIn(username: string, password: string) {
+    return this.http
+      .post(API_URL + '/sign-in', {
+        username,
+        password
+      }).pipe(catchError(this.handleError));
+  }
 }
