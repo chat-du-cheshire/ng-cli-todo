@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {HttpHandler, HttpInterceptor, HttpRequest} from '@angular/common/http';
-import {SessionService} from './session.service';
+import {SessionService} from '../session.service';
 
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor {

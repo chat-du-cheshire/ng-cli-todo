@@ -17,12 +17,12 @@
     },
     {
       "title": "qwe",
-      "complete": false,
+      "complete": true,
       "id": 6
     },
     {
       "title": "fuc",
-      "complete": false,
+      "complete": true,
       "id": 7
     }
   ]
